@@ -28,7 +28,7 @@ const room = HBInit({
 
 // GAME SETTINGS //
 const scoreLimit = 3;
-const timeLimit = 4;
+const timeLimit = 3;
 
 room.setTeamsLock(true);
 

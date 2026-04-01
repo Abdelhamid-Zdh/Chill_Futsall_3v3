@@ -67,8 +67,8 @@ Blue team starts from 0 instead of 1000 (known issue, fix if needed).
 | Map      | Players | Score Limit | Time Limit |
 |----------|---------|-------------|------------|
 | m_solo   | 1       | 0           | 0          |
-| m_2v2    | 2–4     | 3           | 4 min      |
-| m_3v3    | 5–6     | 3           | 4 min      |
+| m_2v2    | 2–5     | 3           | 3 min      |
+| m_3v3    | 6       | 3           | 3 min      |
 
 Maps switch automatically based on player count.
 
