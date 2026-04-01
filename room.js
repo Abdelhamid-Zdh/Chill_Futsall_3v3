@@ -4,14 +4,15 @@
 /* ROOM */
 
 // GLOBAL VARIABLES //
-const roomName = "🟧 Chill | Futsal | 3v3 | Elo 🟧";
+const roomName = "🟧 Chill | Futsal | 3v3 | Elo 🟧 Testing";
 const maxPlayers = 30;
 const roomPublic = false;
-const token = "thr1.AAAAAGnM_TWTGrZtxFf4JQ.XIWrmh_fztw";
+const token = "thr1.AAAAAGnNpL8rv4n8IYyPtw.QMyBlbwnZ4E";
+const password = "Chillpass2020"
 
 // GEOLOCALIZATION //
 const geo = [
-    { code: "EN", lat: 52.42, lon: -1.91 }, // Birmingham, UK
+    // { code: "EN", lat: 52.42, lon: -1.91 }, // Birmingham, UK
 ];
 
 // Admin password //
@@ -22,8 +23,9 @@ const room = HBInit({
     maxPlayers: maxPlayers,
     public: roomPublic,
     noPlayer: true,
-    geo: geo[0],
+    // geo: geo[0],
     token: token,
+    password: password,
 });
 
 // GAME SETTINGS //
