@@ -12,7 +12,7 @@ const password = "Chillpass2020"
 
 // GEOLOCALIZATION //
 const geo = [
-    // { code: "EN", lat: 52.42, lon: -1.91 }, // Birmingham, UK
+    { code: "EN", lat: 52.42, lon: -1.91 }, // Birmingham, UK
 ];
 
 // Admin password //
@@ -23,7 +23,7 @@ const room = HBInit({
     maxPlayers: maxPlayers,
     public: roomPublic,
     noPlayer: true,
-    // geo: geo[0],
+    geo: geo[0],
     token: token,
     password: password,
 });
