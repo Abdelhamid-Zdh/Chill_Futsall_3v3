@@ -138,16 +138,6 @@ Maps switch automatically based on player count.
 
 ---
 
-## Role Codes
-Change these in `room.js` before deploying:
-```js
-const vipCode   = "ChillVIP2026";
-const modCode   = "ChillMOD2026";
-const staffCode = "ChillSTAFF2026";
-```
-
----
-
 ## Installation
 
 ### Requirements
@@ -202,7 +192,6 @@ const token = "your_new_token_here";
 
 ## Known Issues / TODOs
 
-- Blue team Elo formula starts from 0 instead of 1000 (inconsistency with red team)
 - Token needs manual renewal when it expires
 - `checkStatsFormat` allows EMJ to be either number or string for backwards compatibility
 - No web dashboard yet for viewing stats externally

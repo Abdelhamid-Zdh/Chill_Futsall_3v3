@@ -998,7 +998,7 @@ async function updateStats() {
         for (var i = 0; i < allReds.length; i++) {
             stats = await getPlayerStats(getAuth(allReds[i]));
             let old = stats[Ss.ELO];
-            stats[Ss.ELO] = 1000 + stats[Ss.WI] * 5 + (stats[Ss.GA] - stats[Ss.WI]) * -15 + stats[Ss.GL] * 15 + stats[Ss.AS] * 15 + stats[Ss.CS] * 20;
+            stats[Ss.ELO] = stats[Ss.WI] * 5 + (stats[Ss.GA] - stats[Ss.WI]) * -15 + stats[Ss.GL] * 15 + stats[Ss.AS] * 15 + stats[Ss.CS] * 20;
             await setPlayerStats(getAuth(allReds[i]), stats);
             room.sendAnnouncement(`${stats[Ss.NK]}: ${old} -> ${stats[Ss.ELO]} (${stats[Ss.ELO] - old >= 0 ? "+" : ""}${stats[Ss.ELO] - old})`, allReds[i].id, redColor, "normal", 2);
         }
