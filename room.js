@@ -7,7 +7,7 @@
 const roomName = "🟧 Chill | Futsal | 3v3 | Elo 🟧 Testing";
 const maxPlayers = 30;
 const roomPublic = false;
-const token = "thr1.AAAAAGnNpL8rv4n8IYyPtw.QMyBlbwnZ4E";
+const token = "thr1.AAAAAGnOXuw_kKbG96DkyQ.VyJrnGFnp8k";
 const password = "Chillpass2020";
 
 /* Room Log Links */
