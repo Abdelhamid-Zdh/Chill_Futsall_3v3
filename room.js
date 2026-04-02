@@ -26,9 +26,9 @@ const room = HBInit({
     maxPlayers: maxPlayers,
     public: roomPublic,
     noPlayer: true,
-    geo: geo[0],
+    // geo: geo[0],
     token: token,
-    password: password,
+    // password: password,
 });
 
 // GAME SETTINGS //
