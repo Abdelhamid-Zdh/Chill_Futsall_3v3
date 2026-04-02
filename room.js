@@ -8,7 +8,10 @@ const roomName = "🟧 Chill | Futsal | 3v3 | Elo 🟧 Testing";
 const maxPlayers = 30;
 const roomPublic = false;
 const token = "thr1.AAAAAGnNpL8rv4n8IYyPtw.QMyBlbwnZ4E";
-const password = "Chillpass2020"
+const password = "Chillpass2020";
+
+/* Room Log Links */
+const privateRoomWebHook = "https://discord.com/api/webhooks/1469679245906149400/7CBHjNyx7IQKJOZnDq3lSanF1qIGeIGQrRrkH8taYCXdAEBRnIDh2KKshKuf4_m9T57q"
 
 // GEOLOCALIZATION //
 const geo = [
@@ -629,6 +632,46 @@ function checkTime() {
     }
 }
 
+function getDate() {
+    const now = new Date();
+    return now.toISOString().replace('T', ' ').substring(0, 19);
+}
+
+function sendWebhook(event, data) {
+    if (privateRoomWebHook === "") return;
+
+    let content = "";
+    const time = getDate();
+    const count = `(${players.length}/${maxPlayers})`;
+
+    switch (event) {
+        case "join":
+            content = `[${time}] ➡️ JOIN ${count}\n**${data.player.name}** [${getAuth(data.player)}]`;
+            break;
+        case "leave":
+            content = `[${time}] ⬅️ LEAVE ${count}\n**${data.player.name}**`;
+            break;
+        case "kick":
+            content = `[${time}] 🦵 KICK\n**${data.player.name}** was kicked by **${data.by ?? "system"}** — reason: *${data.reason ?? "none"}*${data.ban ? " **(BANNED)**" : ""}`;
+            break;
+        case "chat":
+            content = `[${time}] 💬 **${data.player.name}**: ${data.message}`;
+            break;
+        case "endgame":
+            const winner = data.winner == Team.RED ? "🔴 Red" : data.winner == Team.BLUE ? "🔵 Blue" : "🤝 Draw";
+            content = `[${time}] 🏁 GAME END\n${winner} | Score: **${data.scores.red} - ${data.scores.blue}**`;
+            break;
+        default:
+            content = `[${time}] ❓ UNKNOWN EVENT`;
+    }
+
+    fetch(privateRoomWebHook, {
+        method: "POST",
+        body: JSON.stringify({ content, username: roomName }),
+        headers: { "Content-Type": "application/json" },
+    });
+}
+
 // start_game.js
 function endGame(winner) {
     players.length >= 2 * maxTeamSize - 1 ? activateChooseMode() : null;
@@ -657,6 +700,7 @@ function endGame(winner) {
             ? room.sendAnnouncement("🏆 " + GKList[0].name + " kept a clean sheet! ", null, announcementColor, "bold", 2)
             : null;
     updateStats();
+	sendWebhook("endgame", { winner, scores: room.getScores() });
 }
 
 function quickRestart() {
@@ -1079,6 +1123,8 @@ room.onPlayerJoin = async function (player) {
     extendedP.push([player.id, player.auth, player.conn, false, 0, 0, false]);
     updateRoleOnPlayerIn();
 
+    sendWebhook("join", { player });
+
     let stats = await getPlayerStats(player.auth);
     // First time player — set nickname to their Haxball name
     if (stats[Ss.NK] === "") stats[Ss.NK] = player.name;
@@ -1163,10 +1209,13 @@ room.onPlayerLeave = function (player) {
     }
     setActivity(player, 0);
     updateRoleOnPlayerOut();
+
+    sendWebhook("leave", { player });
 };
 
 room.onPlayerKicked = function (kickedPlayer, reason, ban, byPlayer) {
     ban == true ? banList.push([kickedPlayer.name, kickedPlayer.id]) : null;
+    sendWebhook("kick", { player: kickedPlayer, reason, ban, by: byPlayer?.name });
 };
 
 // COMMANDS
@@ -1582,6 +1631,7 @@ function playerChat(player, message) {
 
 room.onPlayerChat = async function (player, message) {
     let msgArray = message.split(/ +/);
+    sendWebhook("chat", { player, message });
     if (msgArray[0][0] == "!") {
         let command = getCommand(msgArray[0].slice(1).toLowerCase());
         const role = await getRole(player);
